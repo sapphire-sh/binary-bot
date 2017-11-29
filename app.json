@@ -1,0 +1,4 @@
+{
+	"name": "@binary_bot",
+	"script": "./dist/main.js"
+}

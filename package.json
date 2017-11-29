@@ -1,0 +1,38 @@
+{
+  "name": "binary_bot",
+  "version": "1.0.0",
+  "description": "@binary_bot",
+  "main": "./src/main.js",
+  "scripts": {
+    "build": "babel src -d ./dist",
+    "prestart": "npm run build",
+    "start": "pm2 start ./app.json",
+    "stop": "pm2 stop ./app.json",
+    "test": "cross-env NODE_ENV=test mocha --require babel-core/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapphiredev/binary_bot.git"
+  },
+  "keywords": [
+    "twitter",
+    "bot"
+  ],
+  "author": "sapphire",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sapphiredev/binary_bot/issues"
+  },
+  "homepage": "https://github.com/sapphiredev/binary_bot#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "node-schedule": "^1.2.5",
+    "twit": "^2.2.9"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.1",
+    "mocha": "^4.0.1"
+  }
+}
