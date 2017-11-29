@@ -4,7 +4,7 @@ import App from './app';
 
 const app = new App();
 
-const s = schedule.scheduleJob('* * * * *', () => {
+const s = schedule.scheduleJob('0 * * * *', () => {
 	app.readNumber()
 	.then((e) => {
 		let number = e;
