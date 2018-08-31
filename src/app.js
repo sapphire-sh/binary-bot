@@ -14,7 +14,7 @@ class App {
 		let self = this;
 
 		const filename = 'number' + (process.env.NODE_ENV === 'test' ? '.test' : '') + '.txt';
-		self.path = path.resolve(__dirname, '../dist', filename);
+		self.path = path.resolve(__dirname, '..', filename);
 
 		let twit = new Twit(CONFIG);
 		Promise.promisifyAll(twit);
