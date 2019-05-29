@@ -8,7 +8,6 @@
     "build:dev": "cross-env NODE_ENV=development npm run _build",
     "build:prod": "cross-env NODE_ENV=production npm run _build",
     "build": "npm run build:prod",
-    "prestart": "npm run build",
     "start:dev": "nodemon ./dist/index.js --watch ./dist/index.js",
     "start:prod": "node ./dist/index.js",
     "start": "npm run start:prod",
