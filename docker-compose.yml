@@ -4,6 +4,7 @@ services:
   ditto_bot:
     build: .
     image: binary_bot
+    restart: unless-stopped
     depends_on:
       - redis
     networks:
@@ -12,6 +13,7 @@ services:
     image: redis:alpine
     command: redis-server --appendonly yes
     hostname: redis
+    restart: unless-stopped
     networks:
       - redis
     volumes:
