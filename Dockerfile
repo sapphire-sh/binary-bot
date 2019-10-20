@@ -3,7 +3,8 @@ FROM node:alpine
 RUN mkdir /opt/project
 WORKDIR /opt/project
 
-RUN apk add --no-cache git
+RUN apk update \
+		&& apk add --no-cache git
 
 COPY package*.json ./
 
@@ -13,4 +14,4 @@ COPY . .
 
 RUN npm run build
 
-ENTRYPOINT [ "node", "./dist/index.js" ]
+ENTRYPOINT [ "node", "./dist/main.js" ]

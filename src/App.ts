@@ -27,6 +27,7 @@ export class App {
 
 	public async start() {
 		schedule.scheduleJob('0 * * * *', async () => {
+			console.log('tweet', new Date());
 			await this.tweet();
 		});
 	}

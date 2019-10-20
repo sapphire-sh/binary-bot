@@ -1,4 +1,5 @@
 declare const __test: boolean;
+
 declare const __config: {
 	consumer_secret: string;
 	consumer_key: string;
