@@ -1,30 +1,27 @@
 import Twit from 'twit';
 
-class Tweeter {
-	private static instance: Tweeter | null = null;
+import {
+	composeTweet,
+} from '~/helpers';
 
-	public static get Instance(): Tweeter {
-		if (this.instance === null) {
-			this.instance = new Tweeter();
-		}
-		return this.instance;
-	}
-
+export class Tweeter {
 	private readonly twit: Twit;
 
-	private constructor() {
-		this.twit = new Twit(__config);
+	public constructor(config: Twit.ConfigKeys) {
+		this.twit = new Twit(config);
 	}
 
-	public async tweet(value: string): Promise<void> {
-		if (__dev || __test) {
-			console.log(value);
-			return;
+	protected async tweet(status: string): Promise<void> {
+		await this.twit.post('statuses/update', { status });
+	}
+
+	public async tweetValue(value: number): Promise<void> {
+		try {
+			const status = composeTweet(value);
+			await this.tweet(status);
 		}
-		await this.twit.post('statuses/update', {
-			'status': value,
-		});
+		catch (error) {
+			console.log(error);
+		}
 	}
 }
-
-export const tweeter = Tweeter.Instance;

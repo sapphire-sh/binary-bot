@@ -1,49 +1,33 @@
-import path from 'path';
-
 import schedule from 'node-schedule';
 
 import {
-	counter,
-	tweeter,
+	Database,
+	Tweeter,
 } from '~/libs';
 
+import {
+	getNextValue,
+} from '~/helpers';
+
 export class App {
-	private readonly path: string;
+	private readonly database: Database;
+	private readonly tweeter: Tweeter;
 
-	private job: schedule.Job | null = null;
-
-	constructor() {
-		const filename = `number.${__test ? '.test' : ''}.txt`;
-
-		this.path = path.resolve(__dirname, '..', filename);
+	public constructor() {
+		this.database = new Database();
+		this.tweeter = new Tweeter(__config);
 	}
 
-	public async initialize() {
-		try {
-			await counter.getNextValue();
-		}
-		catch (error) {
-			await counter.resetValue();
-		}
+	private async tweet(): Promise<void> {
+		const prevValue = await this.database.readValue();
+		const nextValue = getNextValue(prevValue);
+		await this.tweeter.tweetValue(nextValue);
+		await this.database.writeValue(nextValue);
 	}
 
 	public async start() {
-		console.log('start');
-
-		await this.initialize();
-
-		this.job = schedule.scheduleJob('0 * * * *', async () => {
-			const value = await counter.getNextValue();
-			await tweeter.tweet(value.toString(2));
-			await counter.setNextValue(value);
+		schedule.scheduleJob('0 * * * *', async () => {
+			await this.tweet();
 		});
-	}
-
-	public async stop() {
-		console.log('stop');
-
-		if (this.job !== null) {
-			schedule.cancelJob(this.job);
-		}
 	}
 }

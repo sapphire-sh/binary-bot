@@ -1,4 +1,3 @@
-declare const __dev: boolean;
 declare const __test: boolean;
 declare const __config: {
 	consumer_secret: string;
